@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://activiti.org/bpmn" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_dRH8cID2EeOOIZyaRZ2vvg" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="nested-5" isExecutable="true">
+    <bpmn2:startEvent id="start1" />
+    <bpmn2:sequenceFlow sourceRef="start1" targetRef="sub1"/>
+    <bpmn2:subProcess id="sub1">
+      <bpmn2:startEvent id="start2" />
+      <bpmn2:sequenceFlow sourceRef="start2" targetRef="sub2"/>
+      <bpmn2:subProcess id="sub2">
+        <bpmn2:startEvent id="start3" />
+        <bpmn2:sequenceFlow sourceRef="start3" targetRef="sub3"/>
+        <bpmn2:subProcess id="sub3">
+          <bpmn2:startEvent id="start4" />
+          <bpmn2:sequenceFlow sourceRef="start4" targetRef="sub4"/>
+          <bpmn2:subProcess id="sub4">
+            <bpmn2:startEvent id="start5" />
+            <bpmn2:sequenceFlow sourceRef="start5" targetRef="sub5"/>
+            <bpmn2:subProcess id="sub5">
+              <bpmn2:startEvent id="start6" />
+              <bpmn2:sequenceFlow sourceRef="start6" targetRef="task"/>
+              <bpmn2:receiveTask id="task" name="Noop">
+                <bpmn2:extensionElements>
+                  <camunda:executionListener class="org.camunda.bpm.StartListener" event="start" />
+                </bpmn2:extensionElements>
+              </bpmn2:receiveTask>
+              <bpmn2:sequenceFlow sourceRef="task" targetRef="end6" />
+              <bpmn2:endEvent id="end6" />
+            </bpmn2:subProcess>
+            <bpmn2:sequenceFlow sourceRef="sub5" targetRef="end5" />
+            <bpmn2:endEvent id="end5" />
+          </bpmn2:subProcess>
+          <bpmn2:sequenceFlow sourceRef="sub4" targetRef="end4" />
+          <bpmn2:endEvent id="end4" />
+        </bpmn2:subProcess>
+        <bpmn2:sequenceFlow sourceRef="sub3" targetRef="end3" />
+        <bpmn2:endEvent id="end3" />
+      </bpmn2:subProcess>
+      <bpmn2:sequenceFlow sourceRef="sub2" targetRef="end2" />
+      <bpmn2:endEvent id="end2" />
+    </bpmn2:subProcess>
+    <bpmn2:sequenceFlow sourceRef="sub1" targetRef="end1" />
+    <bpmn2:endEvent id="end1" />
+  </bpmn2:process>
+</bpmn2:definitions>
